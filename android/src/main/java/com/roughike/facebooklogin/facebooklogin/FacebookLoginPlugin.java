@@ -21,6 +21,7 @@ public class FacebookLoginPlugin implements MethodCallHandler {
 
     private static final String METHOD_LOG_IN = "logIn";
     private static final String METHOD_LOG_OUT = "logOut";
+    private static final String METHOD_GAME_INVITE = "gameInvite";
     private static final String METHOD_GET_CURRENT_ACCESS_TOKEN = "getCurrentAccessToken";
 
     private static final String ARG_LOGIN_BEHAVIOR = "behavior";
@@ -62,6 +63,8 @@ public class FacebookLoginPlugin implements MethodCallHandler {
             case METHOD_GET_CURRENT_ACCESS_TOKEN:
                 delegate.getCurrentAccessToken(result);
                 break;
+            case METHOD_GAME_INVITE:
+                delegate.gameInvite(result);
             default:
                 result.notImplemented();
                 break;
@@ -77,7 +80,7 @@ public class FacebookLoginPlugin implements MethodCallHandler {
             case LOGIN_BEHAVIOR_WEB_ONLY:
                 return LoginBehavior.WEB_ONLY;
             case LOGIN_BEHAVIOR_WEB_VIEW_ONLY:
-                return LoginBehavior.WEB_VIEW_ONLY;
+                  return LoginBehavior.WEB_VIEW_ONLY;
             default:
                 result.error(
                         ERROR_UNKNOWN_LOGIN_BEHAVIOR,
@@ -105,8 +108,7 @@ public class FacebookLoginPlugin implements MethodCallHandler {
             registrar.addActivityResultListener(resultDelegate);
         }
 
-        public void logIn(
-                LoginBehavior loginBehavior, List<String> permissions, Result result) {
+        public void logIn(LoginBehavior loginBehavior, List<String> permissions, Result result) {
             resultDelegate.setPendingResult(METHOD_LOG_IN, result);
 
             loginManager.setLoginBehavior(loginBehavior);
@@ -116,6 +118,10 @@ public class FacebookLoginPlugin implements MethodCallHandler {
         public void logOut(Result result) {
             loginManager.logOut();
             result.success(null);
+        }
+
+        public void gameInvite(Result result) {
+
         }
 
         public void getCurrentAccessToken(Result result) {
